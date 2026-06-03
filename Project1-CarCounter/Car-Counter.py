@@ -16,11 +16,12 @@ classNames = ["person", "bicycle", "car", "motorcycle", "airplane", "bus", "trai
               "teddy bear", "hair drier", "toothbrush"]
 
 mask = cv2.imread("./mask.png")
-limits = [400, 297, 673, 297]
+limits = [400, 297, 673, 297] #coors of the crossing line
 
 
 #tracking
 tracker = Sort(max_age=20, min_hits=3, iou_threshold=0.3)
+totalCount = []
 
 while True:
     success, img = cap.read()
@@ -69,6 +70,18 @@ while True:
         cvzone.putTextRect(img, f'{int(id)}', (max(0,x1), max(35,y1)), scale=2, thickness=3, offset=10)
 
 
+        cx, cy = x1 + w//2, y1 + h//2
+        cv2.circle(img, (cx, cy), 5, (255,0,255), cv2.FILLED)
+
+        if limits[0] < cx < limits[2] and limits[1] - 15 < cy < limits[3] + 15:
+            if totalCount.count(id) == 0:
+                totalCount.append(id)
+                cv2.line(img, (limits[0], limits[1]), (limits[2], limits[3]), (0, 255, 0), 5)
+
+                
+
+    cvzone.putTextRect(img, f'Count={len(totalCount)}', (50, 50))
+
     cv2.imshow("Image", img)
     # cv2.imshow("Image", imgRegion)
-    cv2.waitKey(0)
+    cv2.waitKey(1)
