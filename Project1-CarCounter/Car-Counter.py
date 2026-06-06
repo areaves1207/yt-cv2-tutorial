@@ -84,4 +84,4 @@ while True:
 
     cv2.imshow("Image", img)
     # cv2.imshow("Image", imgRegion)
-    cv2.waitKey(1)
+    cv2.waitKey(0)

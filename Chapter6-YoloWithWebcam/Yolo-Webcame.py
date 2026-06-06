@@ -4,14 +4,14 @@ import cvzone
 import math
 
 
-# cap = cv2.VideoCapture(0) #for webcam
-# cap.set(3, 640)
-# cap.set(4, 480)
+cap = cv2.VideoCapture(0) #for webcam
+cap.set(3, 640)
+cap.set(4, 480)
 
-cap = cv2.VideoCapture("../Videos/people.mp4") #for video
+# cap = cv2.VideoCapture("../Videos/people.mp4") #for video
 
 
-model = YOLO("../Yolo-Weights/yolov8n.pt")
+model = YOLO("../Yolo-Weights/yolov8l.pt")
 
 classNames = ["person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
               "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe",

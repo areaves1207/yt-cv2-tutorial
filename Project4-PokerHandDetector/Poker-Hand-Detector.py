@@ -8,7 +8,7 @@ cap = cv2.VideoCapture(0) #for webcam
 cap.set(3, 640)
 cap.set(4, 480)
 
-model = YOLO("../Yolo-Weights/yolov8n.pt")
+model = YOLO("./best.pt")
 
 classNames = ['10C', '10D', '10H', '10S', 
               '2C', '2D', '2H', '2S', 
@@ -19,9 +19,11 @@ classNames = ['10C', '10D', '10H', '10S',
               '7C', '7D', '7H', '7S', 
               '8C', '8D', '8H', '8S', 
               '9C', '9D', '9H', '9S',
+              'JC', 'JD', 'JH', 'JS',
+              'QC', 'QD', 'QH', 'QS',
+              'KC', 'KD', 'KH', 'KS',
               'AC', 'AD', 'AH', 'AS', 
-              'JC', 'JD', 'JH', 'JS', 
-              'KC', 'KD', 'KH', 'KS'
+
         ]
 
 while True:
@@ -36,10 +38,8 @@ while True:
             x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
             # cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
 
-            # x1, y1, w, h = box.xywh[0]
             w, h = x2-x1, y2-y1
-            bbox = (int(x1), int(y1), int(w), int(h))
-            cvzone.cornerRect(img, bbox)
+            cvzone.cornerRect(img, (x1, y1, w, h))
 
             #Confidence
             conf = math.ceil((box.conf[0] * 100)) / 100
@@ -47,7 +47,7 @@ while True:
             #class name
             cls = int(box.cls[0])
 
-            cvzone.putTextRect(img, f'{classNames[cls]} {conf}', (max(0,x1), max(35,y1)), scale=1, thickness=1)
+            cvzone.putTextRect(img, f'{cls} {conf}', (max(0,x1), max(35,y1)), scale=1, thickness=1)
 
 
     cv2.imshow("Image", img)
